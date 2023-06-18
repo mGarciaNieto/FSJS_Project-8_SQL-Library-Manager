@@ -9,13 +9,13 @@ For this project, I've built a web application that includes pages to list, add,
 ## Extra credit
 
 - Include a search field for the books listing page. Search should work for all of the following fields:
- - Title
- - Author
- - Genre
- - Year
+  - Title
+  - Author
+  - Genre
+  - Year
 
 - Pagination
- - Include pagination for the books listing page.
+  - Include pagination for the books listing page.
 
 ### To start Project:
 
