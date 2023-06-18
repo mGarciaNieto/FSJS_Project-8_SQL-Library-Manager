@@ -8,8 +8,9 @@ For this project, I've built a web application that includes pages to list, add,
 
 ## Extra credit
 
-- Include a search field for the books listing page. Search should work for all of the following fields:
+- Include a search field for the books listing page. Search works for all of the following fields:
   - Title
+    - so
   - Author
   - Genre
   - Year
