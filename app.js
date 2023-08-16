@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
 
 // Import Sequelize
-const { sequelize } = require('./models/index.js')
+const { sequelize } = require('./models')
 
 var app = express()
 
@@ -41,12 +41,17 @@ app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-	next(createError(404))
+	
 })
 
 // error handler
 app.use(function (err, req, res, next) {
+	console.log('Global error handler called')
+	console.log(err.status)
 	// set locals, only providing error in development
+	err.status = err.status || 500
+	err.message = err.message || 'Sorry! Something went wrong. Please try again later!'
+
 	res.locals.message = err.message
 	res.locals.error = req.app.get('env') === 'development' ? err : {}
 

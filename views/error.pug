@@ -2,14 +2,14 @@ extends layout.pug
 
 block content
 
-nav.nav
-  a(href='/')
-    span &larr;
-    |  Back
-    h1 Server Error 
-      h2= err.status 
-      h3= err.message
-      h4 Sorry! There was an unexpected error on the server.
-      pre #{error.stack}
+  nav.nav
+    a(href='/')
+      span &larr;
+      |  Back
+      h1 Server Error 
+        h2= err.status 
+        h3= err.message
+        h4 Sorry! There was an unexpected error on the server.
+        pre #{error.stack}
 
-  img.error(src='../static/images/error/error_500.png' alt='Internal server error 500') 
+    img.error(src='../static/images/error/error_500.png' alt='Internal server error 500') 
