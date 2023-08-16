@@ -3,13 +3,13 @@ extends layout
 block content
   h1= title
   h1 Books
-  p Welcome to #{title}
-    img.library-img(src='/static/images/libraryPexels.jpeg' alt='Image of a library')
+  h1 Welcome to #{title}
+  img.library-img(src='images/libraryPexels.jpeg' alt='Image of a library')
 
   h1 Books
   p 
     a.button(href='books/new') Create New Book 
-  table 
+  table.table 
     thead 
       tr 
         th Title 
