@@ -34,14 +34,14 @@ router.get(
 	})
 )
 
-/* Show list of books handle by the search form */
+/* Show list of books based on terms defined in the search form */
 router.post(
 	'/books',
 	asyncHandler(async (req, res) => {
 		const searchTerm = req.body.search
 		if (searchTerm === '') {
 			// Redirect to the GET /books route
-			return res.redirect('/books');
+			return res.redirect('/books')
 		}
 		const whereClause = {
 			[Op.or]: [{ title: { [Op.like]: `%${searchTerm}%` } }, { author: { [Op.like]: `%${searchTerm}%` } }, { genre: { [Op.like]: `%${searchTerm}%` } }, { year: { [Op.like]: `%${searchTerm}%` } }]
