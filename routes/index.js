@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const { Book } = require('../models')
+const { Op } = require('sequelize')
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb) {
@@ -15,18 +16,37 @@ function asyncHandler(cb) {
 }
 
 /* Home route should redirect to the /books route */
-router.get(
-	'/',
-	asyncHandler(async (req, res) => {
-		res.redirect('/books')
-	})
-)
+router.get('/', (req, res) => res.redirect('/books'))
 
 /* Shows the full list of books */
 router.get(
 	'/books',
 	asyncHandler(async (req, res) => {
-		const books = await Book.findAll({ order: [['createdAt', 'DESC']] })
+		let books = await Book.findAll({ order: [['createdAt', 'DESC']] })
+
+		const limit = 10
+		const totalBooks = await Book.count()
+		const totalPages = Math.ceil(totalBooks / limit)
+
+		const page = req.query.page ? (books = books.slice(req.query.page * limit - limit, req.query.page * limit)) : (books = books.slice(0, limit))
+
+		limit > totalBooks ? res.render('index', { books, title: 'Library Books' }) : res.render('index', { books, page: 1, limit, totalPages, title: 'Library Books' })
+	})
+)
+
+/* Show list of books handle by the search form */
+router.post(
+	'/books',
+	asyncHandler(async (req, res) => {
+		const searchTerm = req.body.search
+		if (searchTerm === '') {
+			// Redirect to the GET /books route
+			return res.redirect('/books');
+		}
+		const whereClause = {
+			[Op.or]: [{ title: { [Op.like]: `%${searchTerm}%` } }, { author: { [Op.like]: `%${searchTerm}%` } }, { genre: { [Op.like]: `%${searchTerm}%` } }, { year: { [Op.like]: `%${searchTerm}%` } }]
+		}
+		const books = await Book.findAll({ where: whereClause, order: [['createdAt', 'DESC']] })
 		res.render('index', { books, title: 'Library Books' })
 	})
 )
